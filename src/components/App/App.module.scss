@@ -1,0 +1,33 @@
+.App {
+  padding: 50px 103px 120px;
+}
+.Logo {
+  margin: 0 auto 50px;
+  text-align: center;
+  display: block;
+}
+.Content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 754px;
+  margin: 0 auto;
+}
+.Filters {
+  margin-right: 20px;
+}
+@media all and (max-width: 960px) {
+  .Content {
+    flex-direction: column;
+    width: 100%;
+  }
+  .Filters {
+    margin-bottom: 20px;
+  }
+}
+
+@media all and (max-width: 768px) {
+  .App {
+    padding: 20px;
+  }
+}

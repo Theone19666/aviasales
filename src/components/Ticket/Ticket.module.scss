@@ -1,0 +1,71 @@
+@import "../../colors.scss";
+.Ticket {
+  padding: 20px;
+  width: 100%;
+  background-color: white;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+}
+.CostWrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+.Cost {
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 24px;
+  color: $blue;
+}
+.TransfersWrapper {
+}
+.TransferWrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  &:not(:last-child) {
+    margin-bottom: 10px;
+  }
+}
+.TransferTitle {
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 18px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: $lightGrey;
+}
+.TransferValue {
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 21px;
+  color: $grey;
+}
+@media all and (max-width: 400px) {
+  .TransfersWrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .TransferWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+
+    &:first-child {
+      align-items: baseline;
+    }
+    &:last-child {
+      align-items: flex-end;
+      .TransferTitle,
+      .TransferValue {
+        text-align: right;
+      }
+    }
+  }
+}

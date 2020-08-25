@@ -1,0 +1,58 @@
+@import "../../colors.scss";
+.Filters {
+  padding: 20px;
+  background: #ffffff;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  width: 232px;
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
+  &__Title {
+    margin-bottom: 20px;
+  }
+}
+.Title {
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 12px;
+  letter-spacing: 0.5px;
+  color: $grey;
+  text-transform: uppercase;
+}
+.FilterName {
+  font-size: 13px;
+  line-height: 20px;
+  color: $grey;
+  margin-left: 30px;
+}
+.Filter {
+  display: flex;
+  flex-direction: row;
+  &:not(:last-child) {
+    margin-bottom: 20px;
+  }
+}
+.Checkbox {
+  width: 0;
+  height: 0;
+  &::before {
+    content: " ";
+    display: block;
+    width: 20px;
+    height: 20px;
+    border: 1px solid $paleGrey;
+    border-radius: 2px;
+  }
+  &:checked::before {
+    border-color: $blue;
+    background-image: url(./img/checkMark.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+}
+@media all and (max-width: 960px) {
+  .Filters {
+    width: 100%;
+  }
+}
