@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 import classes from "./Filters.module.scss";
 import Checkbox from "../Checkbox";
@@ -57,3 +58,10 @@ function Filters(props: IObject = {}) {
 }
 
 export default Filters;
+Filters.propTypes = {
+  className: PropTypes.string,
+};
+
+Filters.defaultProps = {
+  className: "",
+};

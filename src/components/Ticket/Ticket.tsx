@@ -1,4 +1,6 @@
 import React from "react";
+import PropTypes from "prop-types";
+
 import { IObject } from "../../interfaces";
 import classes from "./Ticket.module.scss";
 import S7 from "./img/S7.svg";
@@ -73,3 +75,10 @@ function Ticket(props: IObject = {}): any {
 }
 
 export default Ticket;
+Ticket.propTypes = {
+  cost: PropTypes.string,
+};
+
+Ticket.defaultProps = {
+  cost: "",
+};

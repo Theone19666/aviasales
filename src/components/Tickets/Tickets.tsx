@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 import { IObject } from "../../interfaces";
 import classes from "./Tickets.module.scss";
@@ -48,3 +49,6 @@ function Tickets(props: IObject = {}) {
 }
 
 export default Tickets;
+Tickets.propTypes = {};
+
+Tickets.defaultProps = {};
