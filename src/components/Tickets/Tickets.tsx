@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { IObject } from "../../interfaces";
 import classes from "./Tickets.module.scss";
 import Ticket from "../Ticket";
+import SortingContainer from "../../containers/SortingContainer";
 
 const classNames = require("classnames");
 
@@ -39,10 +40,7 @@ function Tickets(props: IObject = {}) {
   }
   return (
     <div className="TicketsWrapper">
-      <div className={ticketsTabsClassName}>
-        <div className={cheapTicketTabClassName}>Самый дешевый</div>
-        <div className={fastestActiveTicketsTabClassName}>Самый быстрый</div>
-      </div>
+      <SortingContainer />
       <div className="Tickets">{ticketsHtml}</div>
     </div>
   );

@@ -7,44 +7,22 @@ import { IObject } from "../../interfaces";
 
 const classNames = require("classnames");
 
-function Filters(props: IObject = {}) {
-  const { className } = props;
+function Filters(props: IObject) {
+  const { className, filters, toggleCheckedFilter } = props;
   const filterClassName = classNames(classes.Filters, className);
   const titleClassNames = classNames(classes.Title, classes.Filters__Title);
   const FilterNameClassNames = classNames(classes.FilterName);
   const labelClassNames = classNames(classes.Filter);
   const checkboxClassNames = classNames(classes.Checkbox);
-  const filters = [
-    {
-      name: "Все",
-      id: 1,
-      checked: false,
-    },
-    {
-      name: "Без пересадок",
-      id: 2,
-      checked: true,
-    },
-    {
-      name: "1 пересадка",
-      id: 3,
-      checked: true,
-    },
-    {
-      name: "2 пересадки",
-      id: 4,
-      checked: true,
-    },
-    {
-      name: "3 пересадки",
-      id: 5,
-      checked: true,
-    },
-  ];
-  const filtersHtml = filters.map((item) => {
+
+  const filtersHtml = filters.map((item: IObject) => {
     return (
       <label key={String(item.id)} className={labelClassNames}>
-        <Checkbox checked={item.checked} className={checkboxClassNames} />
+        <Checkbox
+          checked={item.checked}
+          className={checkboxClassNames}
+          onChange={() => toggleCheckedFilter(item.id)}
+        />
         <span className={FilterNameClassNames}>{item.name}</span>
       </label>
     );
@@ -60,8 +38,12 @@ function Filters(props: IObject = {}) {
 export default Filters;
 Filters.propTypes = {
   className: PropTypes.string,
+  filters: PropTypes.array,
+  toggleCheckedFilter: PropTypes.func,
 };
 
 Filters.defaultProps = {
   className: "",
+  filters: [],
+  toggleCheckedFilter: () => {},
 };
