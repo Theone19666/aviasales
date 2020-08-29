@@ -19,8 +19,17 @@
   line-height: 24px;
   color: $blue;
 }
-.TransfersWrapper {
+/*.transferItemWrapperClassName {
+  width: 141px;
 }
+.transferItemWrapperClassName:not(:last-child) {
+  margin-right: 20px;
+}
+.transferItemWrapperClassName:nth-child(2),
+.transferItemWrapperClassName:nth-child(3) {
+  text-align: center;
+} */
+
 .TransferWrapper {
   display: flex;
   flex-direction: row;
@@ -67,5 +76,12 @@
         text-align: right;
       }
     }
+    &:not(:last-child) {
+      margin-bottom: 0px;
+    }
+  }
+  .TransferTitle,
+  .TransferValue {
+    width: 100%;
   }
 }

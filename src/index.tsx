@@ -1,13 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { Provider, connect } from "react-redux";
-import { createStore } from "redux";
+import { Provider } from "react-redux";
+import { createStore, applyMiddleware, compose } from "redux";
 
 import App from "./components/App/App";
 import "./main.scss";
-import reducer from "./store/reducer";
-
-const store = createStore(reducer);
+import store from "./store/store";
+import { fetchTickets } from "./store/actions/ticketsActions";
 
 const filters = [
   {

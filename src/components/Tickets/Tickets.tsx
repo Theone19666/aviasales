@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
+import { Spin, Alert } from "antd";
+import moment from "moment";
 
 import { IObject } from "../../interfaces";
 import classes from "./Tickets.module.scss";
@@ -9,20 +11,13 @@ import SortingContainer from "../../containers/SortingContainer";
 const classNames = require("classnames");
 
 function Tickets(props: IObject = {}) {
+  const { fetchTickets, tickets, isError, isFetching } = props;
+  //console.log("ticketsObj", ticketsObj);
+  // const { tickets, isError, isFetching } = ticketsObj;
+  console.log("tickets", tickets);
   const ticketClassName = classNames(classes.Ticket);
-  // const ticketsWrapperClassName = classNames(classes.TicketsWrapper);
-  const ticketsTabsClassName = classNames(classes.TicketsTabs);
-  const cheapTicketTabClassName = classNames(
-    classes.TicketsTab,
-    classes.TicketsTab_cheap,
-    classes.TicketsTab_active
-  );
-  const fastestActiveTicketsTabClassName = classNames(
-    classes.TicketsTab,
 
-    classes.TicketsTab_fastest
-  );
-  const ticket = {
+  /*const ticket = {
     cost: "13 400",
     firstTime: "10:45 – 08:00",
     firstOnWay: "21ч 15м",
@@ -31,22 +26,62 @@ function Tickets(props: IObject = {}) {
     secondOnWay: "13ч 30м",
     secondTransfer: "HKG",
     wayTitle: "MOW – HKT",
-  };
-  let ticketsHtml = [];
-  for (let i = 0; i < 5; i++) {
-    ticketsHtml.push(
-      <Ticket {...ticket} key={String(i)} classNamesList={ticketClassName} />
-    );
+  }; */
+
+  useEffect(() => {
+    fetchTickets();
+  }, []);
+  const ticketsListHtml = [];
+  if (tickets && tickets.length) {
+    for (let i = 0; i < 5; i++) {
+      const ticket = tickets[i];
+      ticketsListHtml.push(
+        <Ticket
+          ticket={ticket}
+          key={String(i)}
+          classNamesList={ticketClassName}
+        />
+      );
+    }
   }
+
+  const errorHtml = isError ? (
+    <Alert
+      type="error"
+      message="Произошла ошибка при получении списка билетов"
+    />
+  ) : (
+    ""
+  );
+  const fetchingHtml = isFetching ? <Spin size="large" /> : "";
+  const ticketsHtml =
+    !isError && !isFetching ? (
+      <div className="Tickets">{ticketsListHtml}</div>
+    ) : (
+      ""
+    );
+
   return (
     <div className="TicketsWrapper">
       <SortingContainer />
-      <div className="Tickets">{ticketsHtml}</div>
+      {fetchingHtml}
+      {errorHtml}
+      {ticketsHtml}
     </div>
   );
 }
 
 export default Tickets;
-Tickets.propTypes = {};
+Tickets.propTypes = {
+  ticketsObj: PropTypes.object,
+  fetchTickets: PropTypes.func,
+};
 
-Tickets.defaultProps = {};
+Tickets.defaultProps = {
+  ticketsObj: {
+    tickets: [],
+    isError: false,
+    isFetching: false,
+  },
+  fetchTickets: () => {},
+};
