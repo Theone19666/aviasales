@@ -8,7 +8,7 @@ import PropTypes from "prop-types";
 const classNames = require("classnames");
 
 function Sorting(props: IObject) {
-  const { sorting, toggleActiveSorting } = props;
+  const { sorting, toggleActiveSorting, toggleSortingId } = props;
   const ticketsTabsClassName = classNames(classes.TicketsTabs);
   const sortingHtml = sorting.map((item: IObject, index: number) => {
     return (
@@ -19,7 +19,10 @@ function Sorting(props: IObject) {
           index === 1 ? classes.TicketsTab_cheap : classes.TicketsTab_fastest,
           item.active ? classes.TicketsTab_active : ""
         )}
-        onClick={() => toggleActiveSorting(item.id)}
+        onClick={() => {
+          toggleActiveSorting(item.id);
+          toggleSortingId(item.id);
+        }}
       >
         {item.name}
       </div>

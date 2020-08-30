@@ -8,7 +8,7 @@ import { IObject } from "../../interfaces";
 const classNames = require("classnames");
 
 function Filters(props: IObject) {
-  const { className, filters, toggleCheckedFilter } = props;
+  const { className, filters, toggleCheckedFilter, setIsFetching } = props;
   const filterClassName = classNames(classes.Filters, className);
   const titleClassNames = classNames(classes.Title, classes.Filters__Title);
   const FilterNameClassNames = classNames(classes.FilterName);
@@ -21,7 +21,11 @@ function Filters(props: IObject) {
         <Checkbox
           checked={item.checked}
           className={checkboxClassNames}
-          onChange={() => toggleCheckedFilter(item.id)}
+          onChange={() => {
+            setIsFetching(true);
+            toggleCheckedFilter(item.id);
+            setIsFetching(false);
+          }}
         />
         <span className={FilterNameClassNames}>{item.name}</span>
       </label>

@@ -4,7 +4,6 @@ import moment from "moment";
 
 import { IObject } from "../../interfaces";
 import classes from "./Ticket.module.scss";
-import S7 from "./img/S7.svg";
 
 const classNames = require("classnames");
 
@@ -42,7 +41,11 @@ function getCost(cost: number) {
     .split("")
     .reverse()
     .forEach((item, index) => {
-      if (result.length % 3 === 0 && index !== 0) {
+      if (
+        result.length % 3 === 0 &&
+        index !== 0 &&
+        index !== stringCost.length - 1
+      ) {
         result += ` ${item}`;
       } else {
         result += item;
@@ -53,7 +56,7 @@ function getCost(cost: number) {
 
 function Ticket(props: IObject = {}): any {
   const { ticket, classNamesList } = props;
-  console.log("ticket", ticket);
+  // console.log("ticket", ticket);
   const to = ticket?.segments[0];
   const from = ticket?.segments[1];
 

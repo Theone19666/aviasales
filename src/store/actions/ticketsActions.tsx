@@ -1,4 +1,5 @@
 import { IObject } from "../../interfaces";
+import { cpuUsage } from "process";
 export const setTickets = (tickets: IObject[]) => {
   return {
     type: "SET_TICKETS",
@@ -20,6 +21,57 @@ export const setIsError = (isError: boolean) => {
   };
 };
 
+function getTickets(searchKey: string, dispatch: Function) {
+  let resultList: IObject[] = [];
+  function sendGetTicketsRequest() {
+    return fetch(
+      `https://front-test.beta.aviasales.ru/tickets?searchId=${searchKey}`
+    )
+      .then(
+        (resp) => {
+          if (typeof resp !== "string") {
+            return resp.json();
+          }
+          throw new Error(resp);
+        },
+        (error) => {
+          console.log("An error occurred.", error);
+          dispatch(setIsFetching(false));
+          dispatch(setIsError(true));
+          return error;
+        }
+      )
+      .then(
+        (result) => {
+          resultList = [...resultList, ...result?.tickets];
+          /* if (!result.stop) {
+            sendGetTicketsRequest();
+          } else {
+            return resultList;
+          } */
+          return resultList;
+        },
+        (error) => {
+          console.log("An error occurred.", error);
+          dispatch(setIsFetching(false));
+          dispatch(setIsError(true));
+          return error;
+        }
+      )
+      .then((result) => {
+        console.log("result getTickets", result);
+        if (result) {
+          dispatch(setIsFetching(false));
+          dispatch(setTickets(result));
+        }
+      })
+      .catch((error) => {
+        throw new Error(error);
+      });
+  }
+  return sendGetTicketsRequest();
+}
+
 export function fetchTickets() {
   // Thunk middleware знает, как обращаться с функциями.
   // Он передает метод dispatch в качестве аргумента функции,
@@ -37,6 +89,7 @@ export function fetchTickets() {
     // В этом случае мы возвращаем promise.
     // Thunk middleware не требует этого, но это удобно для нас.
     dispatch(setIsFetching(true));
+    const result: IObject[] = [];
     return fetch(`https://front-test.beta.aviasales.ru/search`)
       .then(
         (response) => {
@@ -65,18 +118,17 @@ export function fetchTickets() {
           if (typeof json !== "object") {
             return json;
           }
-          // Мы можем вызывать dispatch много раз!
-          // Здесь мы обновляем состояние приложения с результатами вызова API.
-          fetch(
-            `https://front-test.beta.aviasales.ru/tickets?searchId=${json.searchId}`
-          )
-            .then((resp) => {
-              return resp.json();
-            })
-            .then((result) => {
+
+          getTickets(
+            json.searchId,
+            dispatch
+          ); /*.then((result) => {
+            console.log("result getTickets", result);
+            if (result) {
               dispatch(setIsFetching(false));
-              dispatch(setTickets(result.tickets));
-            });
+              dispatch(setTickets(result));
+            }
+          }); */
         },
         (error) => {
           console.log("An error occurred.", error);

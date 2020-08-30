@@ -5,4 +5,16 @@
 }
 .Tickets {
   width: 502px;
+  &__Fetching {
+    opacity: 0.3;
+  }
+  @media all and (max-width: 960px) {
+    & {
+      width: 100%;
+    }
+  }
+}
+.LoaderWrapper {
+  margin-left: 50%;
+  transform: translateX(-50%);
 }

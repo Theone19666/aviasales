@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware, compose } from "redux";
+import "antd/dist/antd.css";
 
 import App from "./components/App/App";
 import "./main.scss";
@@ -18,22 +19,26 @@ const filters = [
   {
     name: "Без пересадок",
     id: 2,
-    checked: true,
+    checked: false,
+    transfers: 0,
   },
   {
     name: "1 пересадка",
     id: 3,
-    checked: true,
+    checked: false,
+    transfers: 1,
   },
   {
     name: "2 пересадки",
     id: 4,
-    checked: true,
+    checked: false,
+    transfers: 2,
   },
   {
     name: "3 пересадки",
     id: 5,
-    checked: true,
+    checked: false,
+    transfers: 3,
   },
 ];
 
