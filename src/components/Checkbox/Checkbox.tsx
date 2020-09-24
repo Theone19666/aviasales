@@ -1,9 +1,8 @@
+import { ICheckbox } from "./interfaces";
 import React from "react";
-import PropTypes from "prop-types";
-import { IObject } from "../../interfaces";
 
-function Checkbox(props: IObject) {
-  const { className, onChange, checked } = props;
+function Checkbox(props: ICheckbox) {
+  const { className, onChange, checked = false } = props;
   return (
     <input
       type="checkbox"
@@ -13,15 +12,4 @@ function Checkbox(props: IObject) {
     />
   );
 }
-Checkbox.propTypes = {
-  className: PropTypes.string,
-  onChange: PropTypes.func,
-  checked: PropTypes.bool,
-};
-
-Checkbox.defaultProps = {
-  className: "toggle",
-  onChange: () => {},
-  checked: false,
-};
 export default Checkbox;

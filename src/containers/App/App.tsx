@@ -1,8 +1,10 @@
+import Filters from "../../containers/Filters";
 import React from "react";
 import TicketsContainer from "../../containers/TicketsContainer";
-import FilterContainer from "../../containers/FiltersContainer";
 import classes from "./App.module.scss";
 import logo from "./img/Logo.svg";
+
+// import FilterContainer from "../../containers/FiltersContainer";
 
 function App() {
   const filtersConfig = {
@@ -12,7 +14,7 @@ function App() {
     <main className={classes.App}>
       <img src={logo} className={classes.Logo} />
       <div className={classes.Content}>
-        <FilterContainer {...filtersConfig} />
+        <Filters {...filtersConfig} />
         <TicketsContainer />
       </div>
     </main>

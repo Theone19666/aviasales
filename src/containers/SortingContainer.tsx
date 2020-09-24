@@ -1,7 +1,7 @@
+import { IObject } from "../interfaces";
+import Sorting from "./Sorting";
 import { connect } from "react-redux";
 import { toggleActiveSorting } from "../store/actions/sortingActions";
-import Sorting from "../components/Sorting";
-import { IObject } from "../interfaces";
 
 const mapStateToProps = (state: IObject) => ({
   sorting: state.sorting,

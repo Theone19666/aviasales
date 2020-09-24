@@ -1,5 +1,6 @@
 import { IObject } from "../../interfaces";
 import { cpuUsage } from "process";
+
 export const setTickets = (tickets: IObject[]) => {
   return {
     type: "SET_TICKETS",
@@ -66,7 +67,9 @@ function getTickets(searchKey: string, dispatch: Function) {
         }
       })
       .catch((error) => {
-        throw new Error(error);
+        // throw new Error(error);
+        dispatch(setIsFetching(false));
+        console.log(error);
       });
   }
   return sendGetTicketsRequest();

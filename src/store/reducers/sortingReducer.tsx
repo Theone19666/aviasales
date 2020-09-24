@@ -20,7 +20,7 @@ export default function sortingReducer(
 ): IObject[] {
   switch (action.type) {
     case "SET_SORTING_LIST":
-      return [...state, ...action.list];
+      return [...state, ...action.sortingList];
     case "TOGGLE_ACTIVE_SORTING":
       return toggleActiveSorting(state, action.sortingId);
     default:

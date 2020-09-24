@@ -1,12 +1,12 @@
+import { Alert, Spin } from "antd";
 import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
-import { Spin, Alert } from "antd";
-import moment from "moment";
 
 import { IObject } from "../../interfaces";
-import classes from "./Tickets.module.scss";
+import PropTypes from "prop-types";
+import Sorting from "../../containers/Sorting";
 import Ticket from "../Ticket";
-import SortingContainer from "../../containers/SortingContainer";
+import classes from "./Tickets.module.scss";
+import moment from "moment";
 import store from "../../store/store";
 
 const classNames = require("classnames");
@@ -110,7 +110,7 @@ function Tickets(props: IObject = {}) {
 
   return (
     <div className="TicketsWrapper">
-      <SortingContainer toggleSortingId={toggleSortingId} />
+      <Sorting toggleSortingId={toggleSortingId} />
       {fetchingHtml}
       {errorHtml}
       {ticketsHtml}
