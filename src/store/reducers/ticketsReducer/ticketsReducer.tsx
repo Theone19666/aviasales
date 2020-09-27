@@ -1,9 +1,10 @@
-import { IObject } from "../../interfaces";
+import { IAction } from "./interfaces";
+import { ITicketsStore } from "../../../interfaces";
 
 export default function ticketsReducer(
-  state: IObject = {},
-  action: IObject
-): IObject {
+  state: ITicketsStore = { tickets: [], isFetching: false, isError: false },
+  action: IAction
+): ITicketsStore {
   switch (action.type) {
     case "SET_TICKETS":
       return {

@@ -1,6 +1,6 @@
 import Filters from "../../containers/Filters";
 import React from "react";
-import TicketsContainer from "../../containers/TicketsContainer";
+import Tickets from "../Tickets";
 import classes from "./App.module.scss";
 import logo from "./img/Logo.svg";
 
@@ -15,7 +15,7 @@ function App() {
       <img src={logo} className={classes.Logo} />
       <div className={classes.Content}>
         <Filters {...filtersConfig} />
-        <TicketsContainer />
+        <Tickets />
       </div>
     </main>
   );

@@ -1,62 +1,14 @@
-import React from "react";
-import PropTypes from "prop-types";
-import moment from "moment";
+import { getCost, getDuration, getEndTime, getTransferText } from "./utils";
 
-import { IObject } from "../../interfaces";
+import { ITicketProps } from "./interfaces";
+import React from "react";
 import classes from "./Ticket.module.scss";
+import moment from "moment";
 
 const classNames = require("classnames");
 
-function getDuration(duration: number) {
-  //1465 минут
-  if (duration > 59) {
-    let hours = Math.trunc(duration / 60); // - 24 часов (с остатком 4)
-    let hoursCountInMinutes = hours * 60; // 1440 минут
-    let minutes = duration - hoursCountInMinutes; //25 минут
-    return `${hours}ч ${minutes}м`;
-  } else {
-    return `${duration}ч`;
-  }
-}
-
-function getEndTime(startDate: string, duration: number) {
-  return moment(startDate).add(duration, "m").format("HH:mm");
-}
-
-function getTransferText(tranferCount = 0) {
-  if (!tranferCount) return "без пересадок";
-  if (tranferCount === 1) {
-    return "1 пересадка";
-  }
-  if (tranferCount >= 2 && tranferCount <= 4)
-    return `${tranferCount} пересадки`;
-  if (tranferCount > 5 && tranferCount <= 10)
-    return `${tranferCount} пересадок`;
-}
-
-function getCost(cost: number) {
-  const stringCost = String(cost);
-  let result = "";
-  stringCost
-    .split("")
-    .reverse()
-    .forEach((item, index) => {
-      if (
-        result.length % 3 === 0 &&
-        index !== 0 &&
-        index !== stringCost.length - 1
-      ) {
-        result += ` ${item}`;
-      } else {
-        result += item;
-      }
-    });
-  return result.split("").reverse().join("");
-}
-
-function Ticket(props: IObject = {}): any {
+function Ticket(props: ITicketProps) {
   const { ticket, classNamesList } = props;
-  // console.log("ticket", ticket);
   const to = ticket?.segments[0];
   const from = ticket?.segments[1];
 
@@ -142,10 +94,3 @@ function Ticket(props: IObject = {}): any {
 }
 
 export default Ticket;
-Ticket.propTypes = {
-  cost: PropTypes.number,
-};
-
-Ticket.defaultProps = {
-  cost: 0,
-};

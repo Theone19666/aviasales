@@ -1,46 +1,21 @@
 import { Alert, Spin } from "antd";
+import { IFilterItem, IState, ITicket } from "../../interfaces";
 import React, { useEffect, useState } from "react";
+import { cheapestSorting, fastestSorting, getFilteredTickets } from "./utils";
+import {
+  fetchTickets,
+  setIsFetching,
+} from "../../store/actions/ticketsActions";
 
-import { IObject } from "../../interfaces";
-import PropTypes from "prop-types";
+import { ITickets } from "./interfaces";
 import Sorting from "../../containers/Sorting";
-import Ticket from "../Ticket";
+import Ticket from "../../components/Ticket";
 import classes from "./Tickets.module.scss";
-import moment from "moment";
-import store from "../../store/store";
+import { connect } from "react-redux";
 
 const classNames = require("classnames");
 
-function cheapestSorting(a: IObject, b: IObject): number {
-  if (!a || !b) return 0;
-  return a.price - b.price;
-}
-
-function fastestSorting(a: IObject, b: IObject): number {
-  if (!a || !b) return 0;
-  const firstADuration = a.segments[0].duration;
-  const secondADuration = a.segments[1].duration;
-  const firstBDuration = b.segments[0].duration;
-  const secondBDuration = b.segments[1].duration;
-  return firstADuration + secondADuration - (firstBDuration + secondBDuration);
-}
-
-function getFilteredTickets(filters: IObject, tickets: IObject[]): IObject[] {
-  if (!filters || !tickets) return [];
-  const transfers = filters
-    .filter((item: IObject) => item.checked && !item.main)
-    .map((item: IObject) => item.transfers);
-  if (!transfers.length) {
-    return tickets;
-  }
-  return tickets.filter(
-    (item: IObject) =>
-      transfers.includes(item.segments[0].stops.length) ||
-      transfers.includes(item.segments[1].stops.length)
-  );
-}
-
-function Tickets(props: IObject = {}) {
+function Tickets(props: ITickets) {
   const {
     fetchTickets,
     tickets,
@@ -53,8 +28,6 @@ function Tickets(props: IObject = {}) {
   const [sortingType, setState] = useState(1);
 
   let filteredTickets = getFilteredTickets(filters, tickets);
-  //console.log("ticketsObj", ticketsObj);
-  // const { tickets, isError, isFetching } = ticketsObj;
   const ticketClassName = classNames(classes.Ticket);
   const ticketsClassName = classNames(classes.Tickets, {
     [classes.Tickets__Fetching]: isFetching,
@@ -77,7 +50,7 @@ function Tickets(props: IObject = {}) {
   if (filteredTickets && filteredTickets.length) {
     ticketsListHtml = filteredTickets
       .sort(sortingFunction)
-      .map((ticket: IObject, index: number) => {
+      .map((ticket: ITicket, index: number) => {
         return (
           <Ticket
             ticket={ticket}
@@ -86,7 +59,7 @@ function Tickets(props: IObject = {}) {
           />
         );
       });
-  } else if (filters.filter((item: IObject) => item.checked).length) {
+  } else if (filters.filter((item: IFilterItem) => item.checked).length) {
     ticketsListHtml = (
       <Alert
         type="success"
@@ -118,17 +91,18 @@ function Tickets(props: IObject = {}) {
   );
 }
 
-export default Tickets;
-Tickets.propTypes = {
-  ticketsObj: PropTypes.object,
-  fetchTickets: PropTypes.func,
+const mapStateToProps = (state: IState) => {
+  return state
+    ? {
+        ...state.ticketsObj,
+        filters: state.filters,
+      }
+    : state;
 };
 
-Tickets.defaultProps = {
-  ticketsObj: {
-    tickets: [],
-    isError: false,
-    isFetching: false,
-  },
-  fetchTickets: () => {},
-};
+const mapDispatchToProps = (dispatch: Function) => ({
+  fetchTickets: () => dispatch(fetchTickets()),
+  setIsFetching: (isFetching: boolean) => dispatch(setIsFetching(isFetching)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Tickets);
